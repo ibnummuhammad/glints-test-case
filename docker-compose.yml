@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  postgresql:
+    image: bitnami/postgresql:14.4.0
+    environment:
+      - POSTGRESQL_DATABASE=airflow_db
+      - POSTGRESQL_USERNAME=airflow_db
+      - POSTGRESQL_PASSWORD=airflow_db
+
+  airflow-scheduler:
+    image: bitnami/airflow-scheduler:2.2.5
+    environment:
+      - AIRFLOW_DATABASE_NAME=airflow_db
+      - AIRFLOW_DATABASE_USERNAME=airflow_db
+      - AIRFLOW_DATABASE_PASSWORD=airflow_db
+      - AIRFLOW_LOAD_EXAMPLES=yes
+      - AIRFLOW_WEBSERVER_HOST=airflow
+
+  airflow-worker:
+    image: bitnami/airflow-worker:2.2.5
+    environment:
+      - AIRFLOW_DATABASE_NAME=airflow_db
+      - AIRFLOW_DATABASE_USERNAME=airflow_db
+      - AIRFLOW_DATABASE_PASSWORD=airflow_db
+      - AIRFLOW_WEBSERVER_HOST=airflow
+
+  airflow:
+    image: bitnami/airflow:2.2.5
+    environment:
+      - AIRFLOW_DATABASE_NAME=airflow_db
+      - AIRFLOW_DATABASE_USERNAME=airflow_db
+      - AIRFLOW_DATABASE_PASSWORD=airflow_db
+      - AIRFLOW_LOAD_EXAMPLES=yes
+      - AIRFLOW_PASSWORD=airflow
+      - AIRFLOW_USERNAME=airflow
+      - AIRFLOW_EMAIL=airflow@airflow.com
+    ports:
+      - '5884:8080'
